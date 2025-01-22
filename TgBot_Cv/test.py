@@ -1,6 +1,6 @@
 from aiogram import types, Bot, Dispatcher
 from aiogram.filters import Command
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputMedia
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputMedia, WebAppInfo
 import asyncio
 
 TOKEN = "7758945683:AAHMdKXctl6yDr1S6-4DM2zByqyBc6nTkbU"
@@ -21,8 +21,18 @@ async def handle_text(message: types.Message):
         await contact(message)
     elif message.text == "CV Yuklash 📥":
         await cv_download_menu(message)
-    elif message.text == "⬅️Ortga":
+    elif message.text == "Ortga ↘️":
         await bosh_menu(message)
+    elif message.text == "Telegram ✉️":
+        await tginfo(message)
+    elif message.text == "⬅️ ️Ortga":
+        await contact(message)
+    elif message.text == "Instagram 📸":
+        await instainfo(message)
+    elif message.text == "GitHub 💼":
+        await githubinfo(message)
+
+
 
 
 @dp.message(Command("start"))
@@ -65,7 +75,7 @@ async def bosh_menu(message: types.Message):
 async def cv_download_menu(message: types.Message):
     user_id = message.from_user.id
     button = [
-        [types.KeyboardButton(text="⬅️Ortga")]
+        [types.KeyboardButton(text="Ortga ↘️")]
     ]
     keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
     file_path = "images/CV-resume.jpg"
@@ -80,13 +90,52 @@ async def contact(message: types.Message):
     button = [
         [types.KeyboardButton(text="Telegram ✉️"), types.KeyboardButton(text="Instagram 📸")],
         [types.KeyboardButton(text="Gmail 📧"), types.KeyboardButton(text="GitHub 💼")],
-        [types.KeyboardButton(text="⬅️Ortga")]
+        [types.KeyboardButton(text="Ortga ↘️")]
     ]
     keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
-    await message.answer(
-        "Men bilan quyidagi platformalar orqali bog‘lanishingiz mumkin. Tugmalardan birini tanlang:\n👇👇👇👇",
-        reply_markup=keyboard
-    )
+    await message.answer("Men bilan quyidagi platformalar orqali bog‘lanishingiz mumkin. Tugmalardan birini tanlang:\n👇👇👇👇",reply_markup=keyboard)
+
+
+
+async def tginfo(message: types.Message):
+    user_id = message.from_user.id
+    button = [
+        [types.KeyboardButton(text="⬅️ ️Ortga")]
+    ]
+    keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
+    await message.answer("Men bilan bog'lanish uchun kontaktlar: \n\nhttps://t.me/Belovsasha ✉️ \n\nTelefon raqam: +998-33-545-05-42 ☎️",reply_markup=keyboard)
+    print('tg', user_data)
+
+
+
+
+async def instainfo(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["instainfo"] = "instainfo"
+    buttons = [
+        [types.InlineKeyboardButton(text="Instagramga havola",
+                                    url="https://www.instagram.com/sashbeloov?igsh=MXNidW1nMGZ2ZWh2dw%3D%3D&utm_source=qr")]
+    ]
+    file_path = "images/instagram.jpg"
+    await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons, resize_keyboard=True)
+    await message.answer("Instagram uchun havolani ustiga bosing: \n👇👇👇👇",reply_markup=keyboard)
+
+
+
+async def githubinfo(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["githubinfo"] = "githubinfo"
+    buttons = [
+        [types.InlineKeyboardButton(text="GitHubga havola",
+                                    url="https://github.com/sashbeloov?tab=repositories")]
+    ]
+    file_path = "images/GitHub-logo.png"
+    await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons, resize_keyboard=True)
+    await message.answer("GitHub uchun havolani ustiga bosing: \n👇👇👇👇",reply_markup=keyboard)
+
+
 
 
 async def main():
@@ -95,3 +144,5 @@ async def main():
 
 
 asyncio.run(main())
+
+
