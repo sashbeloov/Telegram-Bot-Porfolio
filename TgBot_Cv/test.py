@@ -41,10 +41,14 @@ async def handle_text(message: types.Message):
         await mysites(message)
     elif message.text == "️Ortga ↘️":
         await loyihalar(message)
-
-
-
-
+    elif message.text == "Ta'lim 🧑‍🏫":
+        await talim(message)
+    elif message.text == "Kollej 🏫":
+        await kollej(message)
+    elif message.text == "️Ortga ⬇️":
+        await talim(message)
+    elif message.text == "Kurslar 📚":
+        await kurslar(message)
 
 
 
@@ -71,15 +75,17 @@ async def bosh_menu(message: types.Message):
     user_data[user_id]["language"] = "language"
     button = [
         [types.KeyboardButton(text="Loyihalar 💻"), types.KeyboardButton(text="Tajriba 🧑‍💻")],
-        [types.KeyboardButton(text="CV Yuklash 📥"), types.KeyboardButton(text="Bog'lanish 📞")],
+        [types.KeyboardButton(text="Ta'lim 🧑‍🏫"), types.KeyboardButton(text="Bog'lanish 📞")],
+        [types.KeyboardButton(text="CV Yuklash 📥")],
     ]
     keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
     await message.answer(
         "Quyidagi tugmalardan birini tanlang:\n\n"
         "💻 Loyihalar — Mening loyihalarim bilan tanishing.\n\n"
         "🧑‍💻 Tajriba — Tajribam haqida ma'lumot oling.\n\n"
-        "📥 CV Yuklash — Rezyumeni yuklab olish.\n\n"
-        "📞 Bog'lanish — Mening aloqalarimni ko‘rish.\n\n👇👇👇👇",
+        "🧑‍🏫 Ta'lim— Rezyumeni yuklab olish.\n\n"
+        "📞 Bog'lanish — Mening aloqalarimni ko‘rish.\n\n👇👇👇👇"
+        "📥 CV Yuklash — Rezyumeni yuklab olish.\n\n",
         reply_markup=keyboard
     )
     print(2, user_data)
@@ -124,7 +130,7 @@ async def tginfo(message: types.Message):
 
 async def instainfo(message: types.Message):
     user_id = message.from_user.id
-    user_data[user_id]["instainfo"] = "instainfo"
+    user_data[user_id]["holat"] = "instainfo"
     buttons = [
         [types.InlineKeyboardButton(text="Instagramga havola",url="https://www.instagram.com/sashbeloov?igsh=MXNidW1nMGZ2ZWh2dw%3D%3D&utm_source=qr"),],
     ]
@@ -136,7 +142,7 @@ async def instainfo(message: types.Message):
 
 async def loyihalar(message: types.Message):
     user_id = message.from_user.id
-    user_data[user_id]["loyihalar"] = "loyihalar"
+    user_data[user_id]["holat"] = "loyihalar"
     button = [
         [types.KeyboardButton(text="Portfolio 📍")],
         [types.KeyboardButton(text="Mening-sitelarim 🌐"),types.KeyboardButton(text="GitHub 💼")],
@@ -150,7 +156,7 @@ async def loyihalar(message: types.Message):
 
 async def githubinfo(message: types.Message):
     user_id = message.from_user.id
-    user_data[user_id]["githubinfo"] = "githubinfo"
+    user_data[user_id]["holat"] = "githubinfo"
     button = [
         [types.InlineKeyboardButton(text="GitHubga havola",
                                     url="https://github.com/sashbeloov?tab=repositories")]
@@ -164,7 +170,7 @@ async def githubinfo(message: types.Message):
 
 async def portfolio(message: types.Message):
     user_id = message.from_user.id
-    user_data[user_id]["portfolio"] = "portfolio"
+    user_data[user_id]["holat"] = "portfolio"
     button = [
         [types.InlineKeyboardButton(text='Websiteni ochish',url="https://t.me/Aleksandr_Portfolioo_bot/Portfolio")]
     ]
@@ -176,7 +182,7 @@ async def portfolio(message: types.Message):
 
 async def mysites(message: types.Message):
     user_id = message.from_user.id
-    user_data[user_id]["mysites"] = "mysites"
+    user_data[user_id]["holat"] = "mysites"
     button = [
         [types.InlineKeyboardButton(text='Youtube klone', url="https://youtube-cloneuz.netlify.app/"),
          types.InlineKeyboardButton(text='Traveluz', url="https://sayohat-uz.netlify.app/")],
@@ -190,6 +196,48 @@ async def mysites(message: types.Message):
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=button, resize_keyboard=True)
     await message.answer("Mening sitelarimni ko'rish uchun pastda turgan tugmalarni bosing \n👇👇👇👇👇👇",reply_markup=keyboard)
 
+
+async def talim(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["holat"] = "talim"
+    button = [
+        [types.KeyboardButton(text="Kurslar 📚"),types.KeyboardButton(text="Kollej 🏫")],
+        [types.KeyboardButton(text="Ortga ↙️")],
+    ]
+    file_path = "../images/education.jpg"
+    await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
+    keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
+    await message.answer("Bu yerda siz mening qaysi kollejni o'qiganim va qaysi kurslarni bitirganim haqida to'liq ma'lumot olasiz. 🧑‍💻\nBuning uchun pastdagi tugmalarni ustiga bosing:\n👇👇👇👇👇👇",reply_markup=keyboard)
+
+
+async def kollej(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["kollej"] = "kollej"
+    await message.answer("Toshkent Iqtisodiyot Kolleji 🏫\n\nBuxgalteriya hisobi va audit yo'nalishi \n\n2015 – 2018 🗓"
+                         "\n\nToshkent Iqtisodiyot Kollejida buxgalteriya hisobi va audit yo'nalishi bo'yicha ta'lim oldim. O'qish davomida buxgalteriya hisobi, moliyaviy tahlil, soliq qonunchiligi va audit metodologiyasi kabi sohalarda chuqur bilimlarga ega bo'ldim. Ushbu yo'nalish bo'yicha amaliyotlar orqali real ish sharoitlarida tejamkor va to'g'ri hisob-kitoblarni amalga oshirish ko'nikmalarini rivojlantirdim. 😊")
+
+
+async def kurslar(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["holat"] = "kurslar"
+    button = [
+        [types.KeyboardButton(text="Ustudy")],
+        [types.KeyboardButton(text="Cambridge"),types.KeyboardButton(text="Supermiya")],
+        [types.KeyboardButton(text="Ortga ⬇️")],
+    ]
+    file_path = "../images/education.jpg"
+    await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
+    keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
+    await message.answer("Men o'qigan kurslarim",reply_markup=keyboard)
+
+
+
+async def Ustudy(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["holat"] = "Ustudy"
+    file_path = "../images/ustudy.jpeg"
+    await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
+    await message.answer("Ustudy o'quv markazi Pythonai yo'nalishidi o'qiganman")
 
 
 
