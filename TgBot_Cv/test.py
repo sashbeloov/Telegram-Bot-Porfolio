@@ -21,9 +21,9 @@ async def handle_text(message: types.Message):
         await contact(message)
     elif message.text == "CV Yuklash 📥":
         await cv_download_menu(message)
-    elif message.text == "Ortga ↘️":
+    elif message.text == "Ortga ↙️":
         await bosh_menu(message)
-    elif message.text == "Telegram ✉️":
+    elif message.text == "Telegram 📨":
         await tginfo(message)
     elif message.text == "⬅️ ️Ortga":
         await contact(message)
@@ -31,6 +31,19 @@ async def handle_text(message: types.Message):
         await instainfo(message)
     elif message.text == "GitHub 💼":
         await githubinfo(message)
+    elif message.text == "️Ortga":
+        await contact(message)
+    elif message.text == "Loyihalar 💻":
+        await loyihalar(message)
+    elif message.text == "Portfolio 📍":
+        await portfolio(message)
+    elif message.text == "Mening-sitelarim 🌐":
+        await mysites(message)
+    elif message.text == "️Ortga ↘️":
+        await loyihalar(message)
+
+
+
 
 
 
@@ -75,10 +88,10 @@ async def bosh_menu(message: types.Message):
 async def cv_download_menu(message: types.Message):
     user_id = message.from_user.id
     button = [
-        [types.KeyboardButton(text="Ortga ↘️")]
+        [types.KeyboardButton(text="Ortga ↙️")]
     ]
     keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
-    file_path = "images/CV-resume.jpg"
+    file_path = "../images/CV-resume.jpg"
     await message.reply_photo(photo=types.FSInputFile(path=file_path,))
     await message.answer("Bu mening rezyumem. Yuklab oling! 😊", reply_markup=keyboard)
     print("CV yuborildi!")
@@ -88,12 +101,12 @@ async def cv_download_menu(message: types.Message):
 async def contact(message: types.Message):
     user_id = message.from_user.id
     button = [
-        [types.KeyboardButton(text="Telegram ✉️"), types.KeyboardButton(text="Instagram 📸")],
-        [types.KeyboardButton(text="Gmail 📧"), types.KeyboardButton(text="GitHub 💼")],
-        [types.KeyboardButton(text="Ortga ↘️")]
+        [types.KeyboardButton(text="Telegram 📨"), types.KeyboardButton(text="Instagram 📸")],
+        [types.KeyboardButton(text="Ortga ↙️")]
     ]
     keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
     await message.answer("Men bilan quyidagi platformalar orqali bog‘lanishingiz mumkin. Tugmalardan birini tanlang:\n👇👇👇👇",reply_markup=keyboard)
+
 
 
 
@@ -113,27 +126,71 @@ async def instainfo(message: types.Message):
     user_id = message.from_user.id
     user_data[user_id]["instainfo"] = "instainfo"
     buttons = [
-        [types.InlineKeyboardButton(text="Instagramga havola",
-                                    url="https://www.instagram.com/sashbeloov?igsh=MXNidW1nMGZ2ZWh2dw%3D%3D&utm_source=qr")]
+        [types.InlineKeyboardButton(text="Instagramga havola",url="https://www.instagram.com/sashbeloov?igsh=MXNidW1nMGZ2ZWh2dw%3D%3D&utm_source=qr"),],
     ]
-    file_path = "images/instagram.jpg"
+    file_path = "../images/instagram.jpg"
     await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons, resize_keyboard=True)
     await message.answer("Instagram uchun havolani ustiga bosing: \n👇👇👇👇",reply_markup=keyboard)
 
 
+async def loyihalar(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["loyihalar"] = "loyihalar"
+    button = [
+        [types.KeyboardButton(text="Portfolio 📍")],
+        [types.KeyboardButton(text="Mening-sitelarim 🌐"),types.KeyboardButton(text="GitHub 💼")],
+        [types.KeyboardButton(text="Ortga ↙️")],
+    ]
+    file_path = "../images/myprojects.jpg"
+    await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
+    keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
+    await message.answer("Bu yerda siz menig Loyihalarim bilan tanishib chiqasiz 🧑‍💻\n",reply_markup=keyboard)
+
 
 async def githubinfo(message: types.Message):
     user_id = message.from_user.id
     user_data[user_id]["githubinfo"] = "githubinfo"
-    buttons = [
+    button = [
         [types.InlineKeyboardButton(text="GitHubga havola",
                                     url="https://github.com/sashbeloov?tab=repositories")]
     ]
-    file_path = "images/GitHub-logo.png"
+    file_path = "../images/GitHub-logo.png"
     await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
-    keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons, resize_keyboard=True)
-    await message.answer("GitHub uchun havolani ustiga bosing: \n👇👇👇👇",reply_markup=keyboard)
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=button, resize_keyboard=True)
+    await message.answer("GitHub orqali siz mening loyihalarimning kodlari bilan tanishib chiqishingiz mumkin 🗂\n\nGitHub uchun havolani ustiga bosing: \n👇👇👇👇",reply_markup=keyboard)
+
+
+
+async def portfolio(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["portfolio"] = "portfolio"
+    button = [
+        [types.InlineKeyboardButton(text='Websiteni ochish',url="https://t.me/Aleksandr_Portfolioo_bot/Portfolio")]
+    ]
+    file_path = "../images/website.png"
+    await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=button, resize_keyboard=True)
+    await message.answer("Bu tugmani bosish orqali siz mening portfolio websiteimga kirasiz 👇👇👇👇",reply_markup=keyboard)
+
+
+async def mysites(message: types.Message):
+    user_id = message.from_user.id
+    user_data[user_id]["mysites"] = "mysites"
+    button = [
+        [types.InlineKeyboardButton(text='Youtube klone', url="https://youtube-cloneuz.netlify.app/"),
+         types.InlineKeyboardButton(text='Traveluz', url="https://sayohat-uz.netlify.app/")],
+        [types.InlineKeyboardButton(text='Shoesuz', url="https://shoes-uz.netlify.app/"),
+         types.InlineKeyboardButton(text='Fast-Food-Uz', url="https://fast-food-uz.netlify.app/")],
+        [types.InlineKeyboardButton(text='Parralax-website', url="https://parralax-websitee.netlify.app/"),
+         types.InlineKeyboardButton(text='Soat-uz', url="https://soat-uzz.netlify.app/")],
+    ]
+    file_path = "../images/websitee.jpg"
+    await message.reply_photo(photo=types.FSInputFile(path=file_path, ))
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=button, resize_keyboard=True)
+    await message.answer("Mening sitelarimni ko'rish uchun pastda turgan tugmalarni bosing \n👇👇👇👇👇👇",reply_markup=keyboard)
+
+
 
 
 
@@ -144,5 +201,7 @@ async def main():
 
 
 asyncio.run(main())
+
+
 
 
